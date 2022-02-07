@@ -1,0 +1,23 @@
+.table-wrapper {
+  background-color: #fff;
+}
+
+.table-list {
+}
+
+.table-item {
+  transition: all 0.5s;
+}
+
+.list-complete-enter,
+.list-complete-leave-to {
+  transform: translateY(-40px);
+  opacity: 0.6;
+  background-color: #f5f5fa;
+}
+
+.list-complete-leave-active {
+  transition: none;
+  position: absolute;
+  opacity: 0;
+}

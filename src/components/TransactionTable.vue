@@ -1,5 +1,5 @@
 <template>
-  <div class="table-wrap">
+  <div class="table-wrapper">
     <v-progress-linear
       indeterminate
       height="2"
@@ -8,24 +8,26 @@
     >
     </v-progress-linear>
 
-    <ol>
+    <ol class="table-list">
       <template>
-        <li v-if="loading">
-          <v-progress-circular
-            color="pointblue"
-            width="2"
-            indeterminate
-          ></v-progress-circular>
+        <li class="table-item transaction-item loading" v-if="loading">
+          <v-progress-circular color="pointblue" width="2" indeterminate>
+          </v-progress-circular>
         </li>
 
-        <li v-else-if="transactions.length == 0">
-          <div>
-            <span class="grey--text">No Transactions</span>
-          </div>
+        <li
+          class="table-item transaction-item empty"
+          v-else-if="transactions.length == 0"
+        >
+          <span class="grey--text">No Transactions</span>
         </li>
 
         <transition-group name="list-complete" v-else>
-          <li v-for="tx in transactions" :key="tx.id" class="row-item">
+          <li
+            v-for="tx in transactions"
+            :key="tx.id"
+            class="table-item transaction-item"
+          >
             <div>
               <router-link :to="{ name: 'transaction', params: { id: tx.id } }">
                 {{ shortAddress(tx.id) }}
@@ -39,17 +41,18 @@
                 small
                 depressed
                 :to="{ name: 'block', params: { index: tx.blockIndex } }"
-                >{{ tx.blockIndex }}</v-btn
               >
+                {{ tx.blockIndex }}
+              </v-btn>
             </div>
 
             <div class="text-no-wrap">{{ moment(tx.timestamp).fromNow() }}</div>
 
             <div v-if="detail">
               <v-chip label small outlined text-color="#555">
-                <strong class="mr-1">{{
-                  latestBlockIndex - tx.blockIndex + 1
-                }}</strong>
+                <strong class="mr-1">
+                  {{ latestBlockIndex - tx.blockIndex + 1 }}
+                </strong>
                 Confirms
               </v-chip>
             </div>
@@ -69,8 +72,9 @@
                 color="success"
                 :outlined="tx.involved['type'] == 'INVOLVED'"
                 v-if="tx.involved"
-                >{{ tx.involved['type'] }}</v-chip
               >
+                {{ tx.involved['type'] }}
+              </v-chip>
             </div>
 
             <div>
@@ -101,8 +105,9 @@
                   }"
                   style="width: 12px"
                   class="mr-1"
-                  ><v-icon x-small>mdi-filter-variant</v-icon></v-btn
                 >
+                  <v-icon x-small>mdi-filter-variant</v-icon>
+                </v-btn>
                 {{ action.inspection['typeId'] }}
               </v-btn>
             </div>
@@ -170,20 +175,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.table-wrap {
-  background-color: white;
-}
-.row-item {
-  transition: all 0.5s;
-}
-.list-complete-enter,
-.list-complete-leave-to {
-  transform: translateY(-40px);
-  background-color: #f5f5fa;
-}
-.list-complete-leave-active {
-  transition: none;
-  position: absolute;
-  opacity: 0;
-}
+@import './table.scss';
 </style>

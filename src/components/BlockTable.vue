@@ -1,5 +1,5 @@
 <template>
-  <div class="block-table">
+  <div class="table-wrapper">
     <v-progress-linear
       indeterminate
       height="2"
@@ -8,21 +8,23 @@
     >
     </v-progress-linear>
 
-    <ol>
+    <ol class="table-list">
       <template>
-        <li v-if="loading">
+        <li class="table-item block-item loading" v-if="loading">
           <v-progress-circular color="pointblue" width="2" indeterminate>
           </v-progress-circular>
         </li>
 
-        <li v-else-if="blocks.length == 0">
-          <div>
-            <span class="grey--text">No Blocks</span>
-          </div>
+        <li class="table-item block-item empty" v-else-if="blocks.length == 0">
+          <span class="grey--text">No Blocks</span>
         </li>
 
         <transition-group name="list-complete" v-else>
-          <li v-for="block in blocks" :key="block.index" class="row-item">
+          <li
+            v-for="block in blocks"
+            :key="block.index"
+            class="table-item block-item"
+          >
             <div>
               <v-btn
                 small
@@ -47,8 +49,9 @@
                   params: { index: block.index },
                   hash: '#tx',
                 }"
-                >{{ block.transactionCount }}</router-link
               >
+                {{ block.transactionCount }}
+              </router-link>
             </div>
 
             <div>
@@ -103,24 +106,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.table-wrap {
-  background-color: white;
-}
-
-.row-item {
-  transition: all 0.5s;
-}
-
-.list-complete-enter,
-.list-complete-leave-to {
-  transform: translateY(-40px);
-  opacity: 0.6;
-  background-color: #f5f5fa;
-}
-
-.list-complete-leave-active {
-  transition: none;
-  position: absolute;
-  opacity: 0;
-}
+@import './table.scss';
 </style>
