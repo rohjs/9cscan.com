@@ -2,13 +2,13 @@
   <v-card outlined class="scoreboard">
     <v-row>
       <v-col order="1" order-lg="1" md="4" lg="3" sm="6">
-        <div class="scoreboard-item price">
+        <div class="scoreboard-card price">
           <div class="price-card">
             <h5 class="scoreboard-title">WNCG Price</h5>
-            <div class="scoreboard-content">
+            <div class="content">
               <v-skeleton-loader type="heading" v-if="loading">
               </v-skeleton-loader>
-              <strong v-else class="data price-data">
+              <strong v-else class="data">
                 ${{ WncgPrice.toFixed(2) }}
                 <span class="text-wncg">/WNCG</span>
                 <span
@@ -22,10 +22,10 @@
 
           <div class="price-card">
             <h5 class="scoreboard-title">Market Cap</h5>
-            <div class="scoreboard-content">
+            <div class="content">
               <v-skeleton-loader type="heading" v-if="loading">
               </v-skeleton-loader>
-              <strong v-else class="data market-cap-data">
+              <strong v-else class="data">
                 ${{ Number(WncgMarketCap.toFixed()).toLocaleString() }}
               </strong>
             </div>
@@ -34,7 +34,7 @@
       </v-col>
 
       <v-col order="3" order-lg="2" cols="12" lg="6">
-        <div class="scoreboard-item performance">
+        <div class="scoreboard-card performance">
           <h5 class="scoreboard-title">Network Performance</h5>
 
           <v-row class="performance-list">
@@ -44,7 +44,7 @@
                   <v-progress-circular indeterminate color="#ccc">
                   </v-progress-circular>
                 </div>
-                <div class="value" v-else>
+                <div class="data" v-else>
                   <label id="avg-block-time"></label>s
                 </div>
                 <span>Avg Block Time</span>
@@ -57,7 +57,7 @@
                   <v-progress-circular indeterminate color="#ccc">
                   </v-progress-circular>
                 </div>
-                <div class="value" v-else>
+                <div class="data" v-else>
                   <label id="avg-difficulty"></label>
                 </div>
                 <span>Avg difficulty</span>
@@ -70,7 +70,7 @@
                   <v-progress-circular indeterminate color="#ccc">
                   </v-progress-circular>
                 </div>
-                <div class="value" v-else>
+                <div class="data" v-else>
                   <label id="avg-tx"></label>
                 </div>
                 <span>Avg Tx Per Block</span>
@@ -83,7 +83,7 @@
       </v-col>
 
       <v-col order="2" order-lg="3" md="8" lg="3" sm="6">
-        <div class="scoreboard-item chart" min-width="230px">
+        <div class="scoreboard-card chart" min-width="230px">
           <h5 class="scoreboard-title">Transaction History</h5>
           <tx-history-chart></tx-history-chart>
         </div>
@@ -145,34 +145,6 @@ export default {
 
 <style scoped lang="scss">
 .scoreboard {
-  &-item {
-    padding: 20px;
-
-    .price-card:not(:last-child) {
-      padding-bottom: 20px;
-    }
-  }
-
-  &-content {
-    text-align: left;
-
-    .data {
-      font-size: 28px;
-
-      &.price-data {
-        .text-wncg,
-        .red--text,
-        .primary--text {
-          font-size: 0.5em;
-        }
-
-        .text-wncg {
-          font-weight: 400;
-        }
-      }
-    }
-  }
-
   &-title {
     margin-bottom: 10px;
     font-size: 14px;
@@ -180,6 +152,10 @@ export default {
     text-align: left;
     text-transform: uppercase;
     color: var(--v-text-base);
+  }
+
+  &-card {
+    padding: 20px;
   }
 
   .misc {
@@ -216,7 +192,7 @@ export default {
       }
     }
 
-    &-item {
+    &-card {
       display: flex;
       flex-direction: column;
       height: 100%;
@@ -251,11 +227,35 @@ export default {
   }
 }
 
+.price-card {
+  &:not(:last-child) {
+    padding-bottom: 20px;
+  }
+
+  .content {
+    text-align: left;
+  }
+
+  .data {
+    font-size: 28px;
+
+    .text-wncg,
+    .red--text,
+    .primary--text {
+      font-size: 0.5em;
+    }
+
+    .text-wncg {
+      font-weight: 400;
+    }
+  }
+}
+
 .performance {
   &-card {
     text-align: left;
 
-    .value {
+    .data {
       font-size: 28px;
       font-weight: 700;
     }

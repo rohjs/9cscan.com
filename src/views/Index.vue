@@ -232,12 +232,6 @@ export default {
   text-transform: uppercase;
   color: var(--v-text-base);
 
-  .loading {
-    svg {
-      width: 16px !important;
-    }
-  }
-
   .data {
     margin-left: 8px;
     color: var(--v-pointlink-base);
